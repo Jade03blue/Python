@@ -1,0 +1,50 @@
+import random
+import re
+
+# Define the chatbot's functionality
+def solve_math_problem(problem):
+    # Use regular expressions to extract the numbers and operator from the problem string
+    match = re.match(r"(\d+) (\+|-|\*|/) (\d+)", problem)
+    if not match:
+        return "I'm sorry, I couldn't understand the problem."
+    
+    # Extract the numbers and operator from the match object
+    num1, operator, num2 = match.groups()
+    
+    # Convert the numbers to floats and perform the operation
+    if operator == '+':
+        result = float(num1) + float(num2)
+    elif operator == '-':
+        result = float(num1) - float(num2)
+    elif operator == '*':
+        result = float(num1) * float(num2)
+    elif operator == '/':
+        result = float(num1) / float(num2)
+    
+    # Return the result
+    return f"The answer is {result}"
+
+# Define the chatbot's conversation flow
+def chat():
+    print("Hello, I'm a math chatbot. How can I help you today?")
+    
+    while True:
+        # Get user input
+        user_input = input("> ")
+        
+        # Check if the user wants to end the conversation
+        if user_input.lower() in ['bye', 'goodbye', 'exit']:
+            print("Goodbye!")
+            break
+        
+        # Check if the user is asking for a math problem to be solved
+        if re.search(r"\d+ (\+|-|\*|/) \d+", user_input):
+            response = solve_math_problem(user_input)
+        else:
+            response = "I'm sorry, I couldn't understand you."
+        
+        # Print the chatbot's response
+        print(response)
+
+# Start the chatbot
+chat()
